@@ -19,4 +19,4 @@ post:
     '400':
       description: BAD REQUEST
     '500':
-      description: INTERNAL ERROR
+      description: INTERNAL SERVER ERROR

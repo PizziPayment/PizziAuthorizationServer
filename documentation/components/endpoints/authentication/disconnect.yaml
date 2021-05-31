@@ -12,4 +12,4 @@ patch:
     '403':
       description: UNAUTHORIZED
     '500':
-      description: INTERNAL ERROR
+      description: INTERNAL SERVER ERROR
