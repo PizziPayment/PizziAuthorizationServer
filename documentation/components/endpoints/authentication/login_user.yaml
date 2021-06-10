@@ -4,6 +4,8 @@ post:
     - Auth
   summary: Login User
   description: Retreive user's access token from account credentials.
+  security:
+    - BasicAuth: []
   requestBody:
     content:
       application/json:
