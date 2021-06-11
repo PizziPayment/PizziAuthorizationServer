@@ -1,4 +1,4 @@
-import { AutoIncrement, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript'
+import { AutoIncrement, DataType, Column, Model, PrimaryKey, Table } from 'sequelize-typescript'
 
 interface TokenAttributes {
     id: number

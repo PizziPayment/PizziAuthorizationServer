@@ -29,6 +29,19 @@ export default class AuthenticationService {
         return ok(credential)
     }
 
+    private static async newToken(client: ClientModel, credential: CredentialModel): Promise<Token> {
+        const access_token = randomBytes(20).toString('hex')
+        const refresh_token = randomBytes(20).toString('hex')
+        const expires_at = new Date(new Date().setMonth(new Date().getDay() + 1))
+        return await Token.create({
+            access_token: access_token,
+            refresh_token: refresh_token,
+            expires_at: expires_at,
+            client_id: client.id,
+            credential_id: credential.id,
+        })
+    }
+
     static async generateTokenBetweenClientAndCredential(client: ClientModel, credential: CredentialModel): Promise<AuthServiceResult<TokenModel>> {
         try {
             const token = await Token.findOne({
@@ -39,22 +52,18 @@ export default class AuthenticationService {
             })
 
             if (!token) {
-                const access_token = randomBytes(20).toString('hex')
-                const refresh_token = randomBytes(20).toString('hex')
-                const expires_at = new Date(new Date().setMonth(new Date().getMonth() + 1))
-                const new_token = await Token.create({
-                    access_token: access_token,
-                    refresh_token: refresh_token,
-                    expires_at: expires_at,
-                    client_id: client.id,
-                    credential_id: credential.id,
-                })
-
-                return ok(new_token)
+                return ok(await this.newToken(client, credential))
             } else {
-                return ok(token)
+                const tomorrow = new Date(new Date().setMonth(new Date().getDay() + 1))
+
+                if (new Date(token.expires_at).getUTCMilliseconds() <= tomorrow.getUTCMilliseconds()) {
+                    return ok(token)
+                } else {
+                    return ok(await this.newToken(client, credential))
+                }
             }
-        } catch {
+        } catch (e) {
+            console.log(e)
             return err(AuthServiceError.DatabaseError)
         }
     }
