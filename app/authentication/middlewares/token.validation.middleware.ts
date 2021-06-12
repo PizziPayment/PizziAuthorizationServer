@@ -10,11 +10,12 @@ export default async function validToken(req: Request, res: Response<ApiResponse
         const maybe_token = await AuthenticationService.getTokenFromValue(access_token)
 
         if (maybe_token.isOk()) {
-            res.locals.token = maybe_token.value
-            return next()
-        } else {
-            return res.status(401).send(new ApiFailure(req.url, 'Invalid token'))
+            if (new Date(maybe_token.value.expires_at).getDate() > new Date().getDate()) {
+                res.locals.token = maybe_token.value
+                return next()
+            }
         }
+        return res.status(401).send(new ApiFailure(req.url, 'Invalid token'))
     }
     return res.status(400).send(new ApiFailure(req.url, 'No token given'))
 }
