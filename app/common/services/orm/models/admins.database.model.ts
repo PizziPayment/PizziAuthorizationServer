@@ -5,5 +5,5 @@ export default class Admin extends Model<Admin> {
     @PrimaryKey
     @AutoIncrement
     @Column
-    id!: number
+    declare id: number
 }

@@ -13,7 +13,7 @@ export default class Client extends Model<ClientAttributes, ClientCreation> {
     @PrimaryKey
     @AutoIncrement
     @Column
-    id!: number
+    declare id: number
 
     @Column
     client_id!: string

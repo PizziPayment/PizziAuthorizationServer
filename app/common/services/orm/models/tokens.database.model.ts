@@ -1,4 +1,6 @@
-import { AutoIncrement, DataType, Column, Model, PrimaryKey, Table } from 'sequelize-typescript'
+import { AutoIncrement, DataType, Column, Model, PrimaryKey, Table, ForeignKey } from 'sequelize-typescript'
+import Client from './clients.database.model'
+import Credential from './credentials.database.model'
 
 interface TokenAttributes {
     id: number
@@ -9,7 +11,7 @@ interface TokenAttributes {
     credential_id: number
 }
 
-type TokenCreation = Omit<TokenAttributes, 'id'>
+export type TokenCreation = Omit<TokenAttributes, 'id'>
 
 @Table({ tableName: 'tokens', timestamps: false })
 export default class Token extends Model<TokenAttributes, TokenCreation> {
@@ -27,9 +29,11 @@ export default class Token extends Model<TokenAttributes, TokenCreation> {
     @Column(DataType.DATE)
     expires_at!: Date
 
+    @ForeignKey(() => Client)
     @Column
     client_id!: number
 
+    @ForeignKey(() => Credential)
     @Column
     credential_id!: number
 }

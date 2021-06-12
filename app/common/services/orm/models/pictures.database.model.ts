@@ -5,7 +5,7 @@ export default class Picture extends Model<Picture> {
     @PrimaryKey
     @AutoIncrement
     @Column
-    id!: number
+    declare id: number
 
     @Column
     low_res_picture?: Buffer
