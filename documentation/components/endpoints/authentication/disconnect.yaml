@@ -9,7 +9,15 @@ patch:
   responses:
     '204':
       description: OK
-    '403':
+    '401':
       description: UNAUTHORIZED
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/responses/error.yaml'
     '500':
       description: INTERNAL ERROR
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/responses/error.yaml'

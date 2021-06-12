@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { ApiResponseWrapper } from '../../common/models/api.response.model'
+import { ApiFailure, ApiResponseWrapper } from '../../common/models/api.response.model'
 import AuthenticationService from '../services/authentication.service'
 
 export default async function validToken(req: Request, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Promise<Response | void> {
@@ -13,8 +13,8 @@ export default async function validToken(req: Request, res: Response<ApiResponse
             res.locals.token = maybe_token.value
             return next()
         } else {
-            return res.status(401).send()
+            return res.status(401).send(new ApiFailure(req.url, 'Invalid token'))
         }
     }
-    return res.status(403).send()
+    return res.status(400).send(new ApiFailure(req.url, 'No token given'))
 }

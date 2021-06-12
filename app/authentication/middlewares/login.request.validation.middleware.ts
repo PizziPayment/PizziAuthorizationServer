@@ -30,7 +30,7 @@ export default function validLoginRequest(req: LoginRequest, res: Response<ApiRe
         if (errors.length === 0) {
             return next()
         } else {
-            return res.status(405).send(new ApiFailure(req.url, errors.join(',')))
+            return res.status(400).send(new ApiFailure(req.url, errors.join(',')))
         }
     } else {
         return res.status(400).send(new ApiFailure(req.url, 'No login body'))

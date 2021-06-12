@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { ApiResponseWrapper } from '../../common/models/api.response.model'
+import { ApiFailure, ApiResponseWrapper } from '../../common/models/api.response.model'
 import AuthenticationService from '../services/authentication.service'
 
 export default async function validBasicAuth(req: Request, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Promise<Response | void> {
@@ -13,8 +13,8 @@ export default async function validBasicAuth(req: Request, res: Response<ApiResp
             res.locals.client = maybe_client.value
             return next()
         } else {
-            return res.status(401).send()
+            return res.status(401).send(new ApiFailure(req.url, 'Invalid client credentials'))
         }
     }
-    return res.status(403).send()
+    return res.status(400).send(new ApiFailure(req.url, 'No client credentials given'))
 }

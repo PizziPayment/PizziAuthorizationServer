@@ -3,6 +3,7 @@ import LoginRequestModel from '../models/login.request.model'
 import ClientModel from '../services/models/client.model'
 import AuthenticationService from '../services/authentication.service'
 import TokenResponseModel from '../models/token.response.model'
+import { ApiFailure } from '../../common/models/api.response.model'
 
 export function loginControllerFor(
     owner_type: 'shop' | 'user' | 'admin'
@@ -18,9 +19,9 @@ export function loginControllerFor(
             if (token.isOk()) {
                 return res.status(200).send(new TokenResponseModel(token.value.access_token, token.value.refresh_token, token.value.expires_at))
             } else {
-                return res.status(500).send()
+                return res.status(500).send(new ApiFailure(req.url, 'Internal error'))
             }
         }
-        return res.status(403).send()
+        return res.status(403).send(new ApiFailure(req.url, 'Invalid credentials'))
     }
 }
