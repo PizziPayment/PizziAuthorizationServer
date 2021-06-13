@@ -1,8 +1,2 @@
 Login:
   $ref: "./login.yaml"
-
-RegisterShop:
-  $ref: "./register_shop.yaml"
-
-RegisterUser:
-  $ref: "./register_user.yaml"

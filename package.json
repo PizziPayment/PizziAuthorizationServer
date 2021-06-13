@@ -29,6 +29,7 @@
   "homepage": "https://github.com/PizziPayment/PizziAPI#readme",
   "devDependencies": {
     "@types/express": "^4.17.11",
+    "@types/oauth2-server": "^3.0.12",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.25.0",
@@ -39,6 +40,11 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "neverthrow": "^4.2.1",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.6.2",
+    "sequelize-typescript": "^2.1.0"
   }
 }
