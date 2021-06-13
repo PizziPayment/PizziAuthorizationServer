@@ -31,7 +31,7 @@ post:
           schema:
             $ref: '../../schemas/responses/error.yaml'
     '500':
-      description: INTERNAL ERROR
+      description: INTERNAL SERVER ERROR
       content:
         application/json:
           schema:
