@@ -13,7 +13,7 @@ export function loginControllerFor(
     return async function login(req: Request<unknown, unknown, LoginRequestModel>, res: Response<unknown, Record<string, ClientModel>>): Promise<Response> {
         const maybe_owner = await AuthenticationService.getOwnerFromCredentials(req.body.email, AuthenticationService.crypt(req.body.password))
 
-        if (maybe_owner.isOk() && maybe_owner.value[owner_type_id] /* check if the owner is valid */) {
+        if (maybe_owner.isOk() && maybe_owner.value[owner_type_id] /* checks if the owner is valid */) {
             const token = await AuthenticationService.generateTokenBetweenClientAndCredential(res.locals.client, maybe_owner.value)
 
             if (token.isOk()) {
