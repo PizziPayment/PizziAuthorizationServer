@@ -21,10 +21,10 @@ export default function validLoginRequest(req: LoginRequest, res: Response<ApiRe
 
     if (req.body) {
         if (!req.body.email || !isValidEmail(req.body.email)) {
-            errors.push('invalid value for "email"')
+            errors.push('invalid "email"')
         }
         if (!req.body.password || !isValidPassword(req.body.password)) {
-            errors.push('invalid value for "password"')
+            errors.push('invalid "password"')
         }
 
         if (errors.length === 0) {
