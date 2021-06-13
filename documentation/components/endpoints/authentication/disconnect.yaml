@@ -1,0 +1,23 @@
+patch:
+  operationId: "disconnect"
+  tags:
+    - Auth
+  summary: Disconnect
+  description: Revoke token validity of a connected user.
+  security:
+    - BearerAuth: []
+  responses:
+    '204':
+      description: OK
+    '401':
+      description: UNAUTHORIZED
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/responses/error.yaml'
+    '500':
+      description: INTERNAL ERROR
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/responses/error.yaml'

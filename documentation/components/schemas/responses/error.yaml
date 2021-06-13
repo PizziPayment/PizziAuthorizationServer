@@ -1,0 +1,11 @@
+type: object
+properties:
+  source:
+    $ref: "../../types.yaml#/url"
+  message:
+    type: string
+example:
+  {
+    "source": "http://api.url/source",
+    "message": "error description",
+  }

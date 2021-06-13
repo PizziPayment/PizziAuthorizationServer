@@ -1,0 +1,5 @@
+Token:
+  $ref: "./token.yaml"
+
+Error:
+  $ref: "./error.yaml"
