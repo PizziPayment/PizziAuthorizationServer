@@ -1,4 +1,4 @@
-patch:
+post:
   operationId: "disconnect"
   tags:
     - Auth

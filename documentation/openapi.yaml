@@ -24,8 +24,8 @@ paths:
     $ref: './components/endpoints/authentication/login_user.yaml'
   /auth/shop/login:
     $ref: './components/endpoints/authentication/login_shop.yaml'
-  /auth/disconnect:
-    $ref: './components/endpoints/authentication/disconnect.yaml'
+  /auth/logout:
+    $ref: './components/endpoints/authentication/logout.yaml'
 
 components:
   securitySchemes:
