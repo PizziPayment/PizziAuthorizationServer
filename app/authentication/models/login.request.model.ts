@@ -1,4 +1,1 @@
-export default class LoginRequestModel {
-    email: string
-    password: string
-}
+export default class LoginRequestModel {  email: string  password: string}
