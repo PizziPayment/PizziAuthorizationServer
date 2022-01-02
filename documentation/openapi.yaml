@@ -20,11 +20,11 @@ tags:
     description: Everything about authentication.
 
 paths:
-  /auth/user/login:
+  /user/login:
     $ref: './components/endpoints/authentication/login_user.yaml'
-  /auth/shop/login:
+  /shop/login:
     $ref: './components/endpoints/authentication/login_shop.yaml'
-  /auth/logout:
+  /logout:
     $ref: './components/endpoints/authentication/logout.yaml'
 
 components:
