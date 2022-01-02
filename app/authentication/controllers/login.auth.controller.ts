@@ -21,6 +21,6 @@ export function loginControllerFor(
         return res.status(500).send(new ApiFailure(req.url, 'Internal error'))
       }
     }
-    return res.status(403).send(new ApiFailure(req.url, 'Invalid credentials'))
+    return res.status(401).send(new ApiFailure(req.url, 'Invalid credentials'))
   }
 }
