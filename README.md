@@ -11,10 +11,10 @@ In order to connect the API to the database you have to set those variables:
 
 ## Install
 ```sh
-> npm install
+> yarn install
 ```
 
 ## Run
 ```sh
-> npm start
+> yarn run start
 ```
