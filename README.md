@@ -16,5 +16,5 @@ In order to connect the API to the database you have to set those variables:
 
 ## Run
 ```sh
-> yarn run start
+> yarn start
 ```
