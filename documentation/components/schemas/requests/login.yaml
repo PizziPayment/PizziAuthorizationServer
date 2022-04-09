@@ -3,7 +3,7 @@ properties:
   email:
     type: string
   password:
-    $ref: "../../types.yaml#/password"
+    type: string
 example:
   {
     "email": "test@test.eu",
