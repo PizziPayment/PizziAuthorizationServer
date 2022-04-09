@@ -10,12 +10,6 @@ function isValidEmail(email: string): boolean {
   return rule.test(email)
 }
 
-function isValidPassword(password: string): boolean {
-  const rule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{12,}$/
-
-  return rule.test(password)
-}
-
 export default function validLoginRequest(req: LoginRequest, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Response | void {
   const errors: Array<string> = []
 
@@ -23,7 +17,7 @@ export default function validLoginRequest(req: LoginRequest, res: Response<ApiRe
     if (!req.body.email || !isValidEmail(req.body.email)) {
       errors.push('invalid "email"')
     }
-    if (!req.body.password || !isValidPassword(req.body.password)) {
+    if (!req.body.password) {
       errors.push('invalid "password"')
     }
 
