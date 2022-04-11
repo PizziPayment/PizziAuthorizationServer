@@ -16,7 +16,7 @@ jobs:
           cache: 'yarn'
       - uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.DB_DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.PIZZI_SSH_KEY }}
       - name: Install dependencies.
         run: yarn install
       - uses: actions/checkout@v2
@@ -24,8 +24,9 @@ jobs:
           repository: PizziPayment/PizziBackDeploymentTools
           ref: master
           path: db
-          token: ${{ secrets.ACCESS_TOKEN }}
+          ssh-key: ${{ secrets.PIZZI_SSH_KEY }}
       - name: Create database.
-        run: cd db && docker compose up db -d
+        run: docker compose up db -d
+        working-directory: ./db
       - name: Run jest tests.
         run: yarn run test
