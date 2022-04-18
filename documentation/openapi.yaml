@@ -1,4 +1,4 @@
-openapi: "3.0.2"
+openapi: "3.1.0"
 info:
   x-logo:
     url: "https://avatars.githubusercontent.com/u/72045151?s=400&u=2da454a65a925719805331f9e3993bec4bc0b417&v=4"
@@ -21,11 +21,11 @@ tags:
 
 paths:
   /user/login:
-    $ref: './components/endpoints/authentication/login_user.yaml'
+    $ref: './components/endpoints/login_user.yaml'
   /shop/login:
-    $ref: './components/endpoints/authentication/login_shop.yaml'
+    $ref: './components/endpoints/login_shop.yaml'
   /logout:
-    $ref: './components/endpoints/authentication/logout.yaml'
+    $ref: './components/endpoints/logout.yaml'
 
 components:
   securitySchemes:

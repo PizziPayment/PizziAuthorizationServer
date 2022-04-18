@@ -14,10 +14,10 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../schemas/responses/error.yaml'
+            $ref: '../schemas/responses/error.yaml'
     '500':
       description: INTERNAL SERVER ERROR
       content:
         application/json:
           schema:
-            $ref: '../../schemas/responses/error.yaml'
+            $ref: '../schemas/responses/error.yaml'
