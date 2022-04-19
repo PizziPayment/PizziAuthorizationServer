@@ -1,0 +1,5 @@
+summary: Generic error
+description: Generic error
+value:
+  source: /source
+  message: Human readable error

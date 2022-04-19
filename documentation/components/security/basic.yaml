@@ -1,3 +1,0 @@
-description: "Authorization: Basic <clientID:clientSecret b64>"
-type: http
-scheme: basic

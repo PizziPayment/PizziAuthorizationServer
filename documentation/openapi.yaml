@@ -21,12 +21,95 @@ tags:
 
 paths:
   /user/login:
-    $ref: './components/endpoints/login_user.yaml'
+    $ref: './components/endpoints/user/login.yaml'
   /shop/login:
-    $ref: './components/endpoints/login_shop.yaml'
+    $ref: './components/endpoints/shop/login.yaml'
+
   /logout:
     $ref: './components/endpoints/logout.yaml'
 
 components:
+  schemas:
+    # Requests
+    RequestLogin:
+      $ref: './components/schemas/requests/login.yaml'
+
+    # Responses
+    ResponseToken:
+      $ref: './components/schemas/responses/token.yaml'
+
+    ResponseError:
+      $ref: './components/schemas/responses/error.yaml'
+
+  examples:
+    # Requests
+    RequestLogin:
+      $ref: './components/examples/requests/login.yaml'
+
+    # Responses
+    ResponseError:
+      $ref: './components/examples/responses/error.yaml'
+    ResponseToken:
+      $ref: './components/examples/responses/token.yaml'
+
+  requestBodies:
+    Login:
+      description: Login request body.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RequestLogin'
+          examples:
+            Login:
+              $ref: '#/components/examples/RequestLogin'
+
+  responses:
+    200Token:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseToken'
+          examples:
+            Token:
+              $ref: '#/components/examples/ResponseToken'
+
+    400BadRequest:
+      description: BAD REQUEST
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+    401Unauthorized:
+      description: UNAUTHORIZED
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+    '500':
+      description: INTERNAL SERVER ERROR
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+
   securitySchemes:
-    $ref: './components/security/_index.yaml'
+    BearerAuth:
+      description: "Authorization: Basic <clientID:clientSecret b64>"
+      type: http
+      scheme: basic
+
+    BasicAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <token>

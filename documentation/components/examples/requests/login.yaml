@@ -1,0 +1,5 @@
+summary: Login example
+description: Login example
+value:
+  email: test@test.eu
+  password: Valid_passw0rd

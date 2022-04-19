@@ -1,11 +1,9 @@
 type: object
+description: Login request model
 properties:
   email:
+    description: Email
     type: string
   password:
+    description: Password
     type: string
-example:
-  {
-    "email": "test@test.eu",
-    "password": "Teeeesteee8!",
-  }

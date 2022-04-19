@@ -1,0 +1,6 @@
+summary: Access token example
+description: Access token example
+value:
+  access_token: 3ad18066641214f27c4d8bea380dbdeccd44c5d4
+  refresh_token: bcbdedcbd8d206bf2654c8ff19149f6bfbf3a858
+  access_token_expires_at: 2022-04-19T20:52:21.548Z
