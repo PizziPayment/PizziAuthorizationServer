@@ -7,13 +7,9 @@ export default async function validRefreshRequest(
   res: Response<ApiResponseWrapper<unknown>>,
   next: NextFunction,
 ): Promise<Response | void> {
-  if (req.body !== undefined) {
-    if (req.body.refresh_token !== undefined) {
-      return next()
-    } else {
-      return res.status(400).send(new ApiFailure(req.url, 'Invalid no "refresh_token" field given'))
-    }
+  if (req.body.refresh_token !== undefined) {
+    return next()
   } else {
-    return res.status(400).send(new ApiFailure(req.url, 'No login body'))
+    return res.status(400).send(new ApiFailure(req.url, 'Invalid no "refresh_token" field given'))
   }
 }

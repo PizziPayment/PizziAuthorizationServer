@@ -13,20 +13,16 @@ function isValidEmail(email: string): boolean {
 export default function validLoginRequest(req: LoginRequest, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Response | void {
   const errors: Array<string> = []
 
-  if (req.body) {
-    if (!req.body.email || !isValidEmail(req.body.email)) {
-      errors.push('invalid "email"')
-    }
-    if (!req.body.password) {
-      errors.push('invalid "password"')
-    }
+  if (!req.body.email || !isValidEmail(req.body.email)) {
+    errors.push('invalid "email"')
+  }
+  if (!req.body.password) {
+    errors.push('invalid "password"')
+  }
 
-    if (errors.length === 0) {
-      return next()
-    } else {
-      return res.status(400).send(new ApiFailure(req.url, errors.join(',')))
-    }
+  if (errors.length === 0) {
+    return next()
   } else {
-    return res.status(400).send(new ApiFailure(req.url, 'No login body'))
+    return res.status(400).send(new ApiFailure(req.url, errors.join(',')))
   }
 }
