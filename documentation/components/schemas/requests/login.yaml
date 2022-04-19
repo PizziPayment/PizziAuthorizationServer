@@ -1,5 +1,8 @@
 type: object
 description: Login request model
+required:
+  - email
+  - password
 properties:
   email:
     description: Email
@@ -7,3 +10,4 @@ properties:
   password:
     description: Password
     type: string
+    format: password

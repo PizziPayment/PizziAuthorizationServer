@@ -1,5 +1,8 @@
 type: object
 description: Error object
+required:
+  - source
+  - message
 properties:
   source:
     description: An URI

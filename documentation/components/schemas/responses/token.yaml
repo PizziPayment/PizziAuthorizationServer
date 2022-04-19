@@ -1,5 +1,10 @@
 type: object
 description: Token response model
+required:
+  - access_token
+  - refresh_token
+  - access_token_expires_at
+  - refresh_token_expires_at
 properties:
   access_token:
     description: Access token value
@@ -9,5 +14,9 @@ properties:
     type: string
   access_token_expires_at:
     description: Date at which the access token expires
+    type: string
+    format: date-time
+  refresh_token_expires_at:
+    description: Date at which the refresh token expires
     type: string
     format: date-time

@@ -1,0 +1,29 @@
+post:
+  operationId: refresh
+  tags:
+    - Auth
+  summary: Refresh token
+  description: Recreate a valid token from a refresh token value
+  security:
+    - BasicAuth: []
+  requestBody:
+    description: Refresh token request body.
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../openapi.yaml#/components/schemas/RequestRefresh'
+        examples:
+          Refresh:
+            $ref: '../../openapi.yaml#/components/examples/RequestRefresh'
+  responses:
+    200:
+      $ref: '../../openapi.yaml#/components/responses/200Token'
+
+    400:
+      $ref: '../../openapi.yaml#/components/responses/400BadRequest'
+    401:
+      $ref: '../../openapi.yaml#/components/responses/401Unauthorized'
+
+    500:
+      $ref: '../../openapi.yaml#/components/responses/500'

@@ -1,0 +1,8 @@
+type: object
+description: Refresh token model
+required:
+  - refresh_token
+properties:
+  refresh_token:
+    description: Refresh token value
+    type: string

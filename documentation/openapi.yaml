@@ -24,6 +24,8 @@ paths:
     $ref: './components/endpoints/user/login.yaml'
   /shop/login:
     $ref: './components/endpoints/shop/login.yaml'
+  /refresh:
+    $ref: './components/endpoints/refresh.yaml'
 
   /logout:
     $ref: './components/endpoints/logout.yaml'
@@ -33,6 +35,8 @@ components:
     # Requests
     RequestLogin:
       $ref: './components/schemas/requests/login.yaml'
+    RequestRefresh:
+      $ref: './components/schemas/requests/refresh.yaml'
 
     # Responses
     ResponseToken:
@@ -45,6 +49,8 @@ components:
     # Requests
     RequestLogin:
       $ref: './components/examples/requests/login.yaml'
+    RequestRefresh:
+      $ref: './components/examples/requests/refresh.yaml'
 
     # Responses
     ResponseError:
