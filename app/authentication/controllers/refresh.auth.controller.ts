@@ -4,13 +4,13 @@ import { ApiFailure } from '../../common/models/api.response.model'
 import RefreshRequestModel from '../models/refresh.request.model'
 import TokenResponseModel from '../models/token.response.model'
 
-export async function refresh(req: Request<unknown, RefreshRequestModel>, res: Response<unknown, Record<string, TokenModel>>): Promise<Response> {
+export async function refresh(req: Request<unknown, RefreshRequestModel>, res: Response<unknown, Record<string, TokenModel>>): Promise<void> {
   const token = res.locals.token
   const maybe_new_token = await TokensService.refreshToken(token)
 
   if (maybe_new_token.isOk()) {
-    return res.status(200).send(new TokenResponseModel(maybe_new_token.value))
+    res.status(200).send(new TokenResponseModel(maybe_new_token.value))
   } else {
-    return res.status(500).send(new ApiFailure(req.url, 'Internal error'))
+    res.status(500).send(new ApiFailure(req.url, 'Internal error'))
   }
 }

@@ -10,7 +10,7 @@ function isValidEmail(email: string): boolean {
   return rule.test(email)
 }
 
-export default function validLoginRequest(req: LoginRequest, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Response | void {
+export default async function validLoginRequest(req: LoginRequest, res: Response<ApiResponseWrapper<unknown>>, next: NextFunction): Promise<void> {
   const errors: Array<string> = []
 
   if (!req.body.email || !isValidEmail(req.body.email)) {
@@ -21,8 +21,8 @@ export default function validLoginRequest(req: LoginRequest, res: Response<ApiRe
   }
 
   if (errors.length === 0) {
-    return next()
+    next()
   } else {
-    return res.status(400).send(new ApiFailure(req.url, errors.join(',')))
+    res.status(400).send(new ApiFailure(req.url, errors.join(',')))
   }
 }

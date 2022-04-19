@@ -6,10 +6,10 @@ export default async function validRefreshRequest(
   req: Request<unknown, unknown, RefreshRequestModel>,
   res: Response<ApiResponseWrapper<unknown>>,
   next: NextFunction,
-): Promise<Response | void> {
+): Promise<void> {
   if (req.body.refresh_token !== undefined) {
-    return next()
+    next()
   } else {
-    return res.status(400).send(new ApiFailure(req.url, 'Invalid no "refresh_token" field given'))
+    res.status(400).send(new ApiFailure(req.url, 'Invalid no "refresh_token" field given'))
   }
 }
