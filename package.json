@@ -53,7 +53,7 @@
     "config": "^3.3.6",
     "express": "^4.17.2",
     "neverthrow": "^4.3.1",
-    "pizzi-db": "git@github.com:PizziPayment/PizziAPIDB.git#6af8375e25c56c401aef15f941bf366b79f96022",
+    "pizzi-db": "git@github.com:PizziPayment/PizziAPIDB.git#36b0053f7acbe1b38678d4554eb9cf2ec6c7465c",
     "reflect-metadata": "^0.1.13"
   },
   "packageManager": "yarn@3.1.1"
