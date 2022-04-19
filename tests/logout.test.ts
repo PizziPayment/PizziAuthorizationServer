@@ -19,20 +19,20 @@ const user = {
 const client = { client_id: 'toto', client_secret: 'tutu' }
 
 async function getUserCredentials(email: string, password: string): Promise<CredentialModel> {
-  return (await CredentialsService.getCredentialFromMailAndPassword(email, EncryptionService.encrypt(password)))._unsafeUnwrap()
+  return (await CredentialsService.getCredentialFromEmailAndPassword(email, EncryptionService.encrypt(password)))._unsafeUnwrap()
 }
 
 async function getUserToken(email: string, password: string): Promise<string> {
   let client_handle = (await ClientsService.getClientFromIdAndSecret(client.client_id, client.client_secret))._unsafeUnwrap()
   let credentials = await getUserCredentials(email, password)
-  let token = (await TokensService.generateTokenBetweenClientAndCredential(client_handle, credentials))._unsafeUnwrap()
+  let token = (await TokensService.generateTokenBetweenClientAndCredential(client_handle.id, credentials.id))._unsafeUnwrap()
 
   return token.access_token
 }
 
 async function createUser() {
-  const user_handle = (await UsersServices.createUser(user.name, user.surname, `${user.place.address}, ${user.place.city}`, user.place.zipcode))._unsafeUnwrap();
-  (await CredentialsService.createCredentialWithId('user', user_handle.id, user.email, EncryptionService.encrypt(user.password)))._unsafeUnwrap()
+  const user_handle = (await UsersServices.createUser(user.name, user.surname, `${user.place.address}, ${user.place.city}`, user.place.zipcode))._unsafeUnwrap()
+  ;(await CredentialsService.createCredentialWithId('user', user_handle.id, user.email, EncryptionService.encrypt(user.password)))._unsafeUnwrap()
 }
 
 function createBearerHeader(token: string): Object {

@@ -6,7 +6,7 @@ export default async function validBasicAuth(req: Request, res: Response<ApiResp
   const authorization_type = req.headers.authorization?.split(' ')
 
   if (authorization_type && authorization_type.length === 2 && authorization_type[0] === 'Basic') {
-    const [client_id, client_secret] = new Buffer(authorization_type[1], 'base64').toString('ascii').split(':')
+    const [client_id, client_secret] = Buffer.from(authorization_type[1], 'base64').toString('ascii').split(':')
     const maybe_client = await ClientsService.getClientFromIdAndSecret(client_id, client_secret)
 
     if (maybe_client.isOk()) {
