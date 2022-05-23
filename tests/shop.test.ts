@@ -20,7 +20,7 @@ const client = { client_id: 'toto', client_secret: 'tutu' }
 const client_header = { Authorization: 'Basic ' + Buffer.from(`${client.client_id}:${client.client_secret}`).toString('base64') }
 
 async function createShop() {
-  const shop_handle = (await ShopsServices.createShop(shop.name, shop.phone, `${shop.place.address}, ${shop.place.city}`, shop.place.zipcode))._unsafeUnwrap();
+  const shop_handle = (await ShopsServices.createShop(shop.name, shop.phone, 2313123, shop.place.address, shop.place.city, shop.place.zipcode))._unsafeUnwrap();
   (await CredentialsService.createCredentialWithId('shop', shop_handle.id, shop.email, EncryptionService.encrypt(shop.password)))._unsafeUnwrap()
 }
 
