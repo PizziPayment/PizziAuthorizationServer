@@ -111,11 +111,11 @@ components:
 
   securitySchemes:
     BearerAuth:
-      description: "Authorization: Basic <clientID:clientSecret b64>"
-      type: http
-      scheme: basic
-
-    BasicAuth:
       type: http
       scheme: bearer
       bearerFormat: Bearer <token>
+
+    BasicAuth:
+      description: "Authorization: Basic <clientID:clientSecret b64>"
+      type: http
+      scheme: basic
