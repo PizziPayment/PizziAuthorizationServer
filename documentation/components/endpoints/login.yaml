@@ -1,0 +1,31 @@
+post:
+  operationId: "login"
+  tags:
+    - Auth
+  summary: Login
+  description: Create an access token.
+  security:
+    - BasicAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../openapi.yaml#/components/schemas/RequestPasswordGrant'
+            - $ref: '../../openapi.yaml#/components/schemas/RequestRefreshTokenGrant'
+        examples:
+          PasswordGrant:
+            $ref: '../../openapi.yaml#/components/examples/RequestPasswordGrant'
+          RefreshTokenGrant:
+            $ref: '../../openapi.yaml#/components/examples/RequestRefreshTokenGrant'
+  responses:
+    200:
+      $ref: '../../openapi.yaml#/components/responses/200Token'
+
+    400:
+      $ref: '../../openapi.yaml#/components/responses/400BadRequest'
+    401:
+      $ref: '../../openapi.yaml#/components/responses/401Unauthorized'
+
+    500:
+      $ref: '../../openapi.yaml#/components/responses/500'

@@ -1,8 +1,8 @@
-import { CredentialModel, CredentialsService, EncryptionService, UserModel, UsersServices } from 'pizzi-db'
+import { CredentialModel, CredentialsService, EncryptionService, ShopModel, ShopsServices, UserModel, UsersServices } from 'pizzi-db'
 import { OrmConfig } from 'pizzi-db/dist/commons/models/orm.config.model'
 import TokenResponseModel from '../../app/authentication/models/token.response.model'
 import { config } from '../../app/common/config'
-import { user } from './models'
+import { user, shop } from './models'
 
 export function configIntoOrmConfig(): OrmConfig {
   const database = config.database
@@ -27,6 +27,18 @@ export async function createUser(): Promise<[UserModel, CredentialModel]> {
   const created_cred = res_cred._unsafeUnwrap()
 
   return [created_user, created_cred]
+}
+
+export async function createShop(): Promise<[ShopModel, CredentialModel]> {
+  const res_shop = await ShopsServices.createShop(shop.name, shop.phone, `${shop.place.address}, ${shop.place.city}`, shop.place.zipcode)
+  expect(res_shop.isOk()).toBeTruthy()
+  const created_shop = res_shop._unsafeUnwrap()
+
+  const res_cred = await CredentialsService.createCredentialWithId('shop', created_shop.id, shop.email, EncryptionService.encrypt(shop.password))
+  expect(res_cred.isOk()).toBeTruthy()
+  const created_cred = res_cred._unsafeUnwrap()
+
+  return [created_shop, created_cred]
 }
 
 export async function verifyReceivedToken(token: TokenResponseModel) {

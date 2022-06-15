@@ -1,5 +1,7 @@
 extends: '@ibm-cloud/openapi-ruleset'
 rules:
   major-version-in-path: off
+  property-description: off
+  request-body-name: off
   response-error-response-schema: off
   string-boundary: off

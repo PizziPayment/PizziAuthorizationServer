@@ -3,7 +3,7 @@ post:
   tags:
     - Auth
   summary: Disconnect
-  description: Revoke token validity of a connected user.
+  description: Revoke token validity.
   security:
     - BearerAuth: []
   responses:

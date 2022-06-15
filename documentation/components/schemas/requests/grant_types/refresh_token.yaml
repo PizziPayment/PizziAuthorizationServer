@@ -1,8 +1,13 @@
 type: object
-description: Refresh token model
+description: Refresh token grant model
 required:
+  - grant_type
   - refresh_token
 properties:
+  grant_type:
+    type: string
+    enum:
+      - refresh_token
   refresh_token:
     description: Refresh token value
     type: string

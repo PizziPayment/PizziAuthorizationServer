@@ -20,12 +20,8 @@ tags:
     description: Everything about authentication.
 
 paths:
-  /user/login:
-    $ref: './components/endpoints/user/login.yaml'
-  /shop/login:
-    $ref: './components/endpoints/shop/login.yaml'
-  /refresh:
-    $ref: './components/endpoints/refresh.yaml'
+  /login:
+    $ref: './components/endpoints/login.yaml'
 
   /logout:
     $ref: './components/endpoints/logout.yaml'
@@ -33,10 +29,10 @@ paths:
 components:
   schemas:
     # Requests
-    RequestLogin:
-      $ref: './components/schemas/requests/login.yaml'
-    RequestRefresh:
-      $ref: './components/schemas/requests/refresh.yaml'
+    RequestPasswordGrant:
+      $ref: './components/schemas/requests/grant_types/password.yaml'
+    RequestRefreshTokenGrant:
+      $ref: './components/schemas/requests/grant_types/refresh_token.yaml'
 
     # Responses
     ResponseToken:
@@ -47,28 +43,16 @@ components:
 
   examples:
     # Requests
-    RequestLogin:
-      $ref: './components/examples/requests/login.yaml'
-    RequestRefresh:
-      $ref: './components/examples/requests/refresh.yaml'
+    RequestPasswordGrant:
+      $ref: './components/examples/requests/grant_types/password.yaml'
+    RequestRefreshTokenGrant:
+      $ref: './components/examples/requests/grant_types/refresh_token.yaml'
 
     # Responses
     ResponseError:
       $ref: './components/examples/responses/error.yaml'
     ResponseToken:
       $ref: './components/examples/responses/token.yaml'
-
-  requestBodies:
-    Login:
-      description: Login request body.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RequestLogin'
-          examples:
-            Login:
-              $ref: '#/components/examples/RequestLogin'
 
   responses:
     200Token:

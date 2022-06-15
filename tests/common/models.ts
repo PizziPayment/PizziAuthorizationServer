@@ -12,3 +12,15 @@ export const user = {
     zipcode: 25619,
   },
 }
+
+export const shop = {
+  name: 'toto',
+  email: 'toto@tutu.tata',
+  password: 'gY@3Cwl4FmLlQ@HycAf',
+  phone: '0652076382',
+  place: {
+    address: '13 rue de la ville',
+    city: 'Ville',
+    zipcode: 25619,
+  },
+}
