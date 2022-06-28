@@ -1,4 +1,4 @@
-openapi: "3.0.2"
+openapi: "3.1.0"
 info:
   x-logo:
     url: "https://avatars.githubusercontent.com/u/72045151?s=400&u=2da454a65a925719805331f9e3993bec4bc0b417&v=4"
@@ -20,13 +20,86 @@ tags:
     description: Everything about authentication.
 
 paths:
-  /user/login:
-    $ref: './components/endpoints/authentication/login_user.yaml'
-  /shop/login:
-    $ref: './components/endpoints/authentication/login_shop.yaml'
+  /login:
+    $ref: './components/endpoints/login.yaml'
+
   /logout:
-    $ref: './components/endpoints/authentication/logout.yaml'
+    $ref: './components/endpoints/logout.yaml'
 
 components:
+  schemas:
+    # Requests
+    RequestPasswordGrant:
+      $ref: './components/schemas/requests/grant_types/password.yaml'
+    RequestRefreshTokenGrant:
+      $ref: './components/schemas/requests/grant_types/refresh_token.yaml'
+
+    # Responses
+    ResponseToken:
+      $ref: './components/schemas/responses/token.yaml'
+
+    ResponseError:
+      $ref: './components/schemas/responses/error.yaml'
+
+  examples:
+    # Requests
+    RequestPasswordGrant:
+      $ref: './components/examples/requests/grant_types/password.yaml'
+    RequestRefreshTokenGrant:
+      $ref: './components/examples/requests/grant_types/refresh_token.yaml'
+
+    # Responses
+    ResponseError:
+      $ref: './components/examples/responses/error.yaml'
+    ResponseToken:
+      $ref: './components/examples/responses/token.yaml'
+
+  responses:
+    200Token:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseToken'
+          examples:
+            Token:
+              $ref: '#/components/examples/ResponseToken'
+
+    400BadRequest:
+      description: BAD REQUEST
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+    401Unauthorized:
+      description: UNAUTHORIZED
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+    '500':
+      description: INTERNAL SERVER ERROR
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+          examples:
+            Error:
+              $ref: '#/components/examples/ResponseError'
+
   securitySchemes:
-    $ref: './components/security/_index.yaml'
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer <token>
+
+    BasicAuth:
+      description: "Authorization: Basic <clientID:clientSecret b64>"
+      type: http
+      scheme: basic

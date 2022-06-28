@@ -1,11 +1,12 @@
 type: object
+description: Error object
+required:
+  - source
+  - message
 properties:
   source:
-    $ref: "../../types.yaml#/url"
-  message:
+    description: An URI
     type: string
-example:
-  {
-    "source": "http://api.url/source",
-    "message": "error description",
-  }
+  message:
+    description: A human description of the error
+    type: string

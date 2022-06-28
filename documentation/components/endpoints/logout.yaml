@@ -1,0 +1,17 @@
+post:
+  operationId: "disconnect"
+  tags:
+    - Auth
+  summary: Disconnect
+  description: Revoke token validity.
+  security:
+    - BearerAuth: []
+  responses:
+    204:
+      description: OK
+
+    401:
+      $ref: '../../openapi.yaml#/components/responses/401Unauthorized'
+
+    500:
+      $ref: '../../openapi.yaml#/components/responses/500'
