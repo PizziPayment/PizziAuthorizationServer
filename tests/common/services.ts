@@ -30,7 +30,7 @@ export async function createUser(): Promise<[UserModel, CredentialModel]> {
 }
 
 export async function createShop(): Promise<[ShopModel, CredentialModel]> {
-  const res_shop = await ShopsServices.createShop(shop.name, shop.phone, `${shop.place.address}, ${shop.place.city}`, shop.place.zipcode)
+  const res_shop = await ShopsServices.createShop(shop.name, shop.phone, shop.siret, shop.place.address, shop.place.city, shop.place.zipcode)
   expect(res_shop.isOk()).toBeTruthy()
   const created_shop = res_shop._unsafeUnwrap()
 

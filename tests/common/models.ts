@@ -18,6 +18,7 @@ export const shop = {
   email: 'toto@tutu.tata',
   password: 'gY@3Cwl4FmLlQ@HycAf',
   phone: '0652076382',
+  siret: 43014643100019,
   place: {
     address: '13 rue de la ville',
     city: 'Ville',
