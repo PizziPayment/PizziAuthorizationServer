@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import { ClientModel, CredentialsService, EncryptionService, TokensService } from 'pizzi-db'
 import { ApiFailure } from '../../common/models/api.response.model'
-import { GrantType, GrantTypes, PasswordGrantType, RefreshTokenGrantType } from '../models/grant_type'
+import { GrantTypeModel, GrantTypes, PasswordGrantTypeModel, RefreshTokenGrantTypeModel } from '../models/grant_type'
 import TokenResponseModel from '../models/token.response.model'
 
-export default async function login(req: Request<unknown, unknown, GrantType>, res: Response<unknown, Record<string, ClientModel>>): Promise<void> {
+export default async function login(req: Request<unknown, unknown, GrantTypeModel>, res: Response<unknown, Record<string, ClientModel>>): Promise<void> {
   switch (req.body.grant_type) {
     case GrantTypes.password: {
-      const body = req.body as PasswordGrantType
+      const body = req.body as PasswordGrantTypeModel
       const maybe_credentials = await CredentialsService.getCredentialFromEmailAndPassword(body.username, EncryptionService.encrypt(body.password))
 
       if (maybe_credentials.isOk()) {
@@ -24,7 +24,7 @@ export default async function login(req: Request<unknown, unknown, GrantType>, r
       break
     }
     case GrantTypes.refresh_token: {
-      const body = req.body as RefreshTokenGrantType
+      const body = req.body as RefreshTokenGrantTypeModel
       const maybe_token = await TokensService.getTokenFromRefreshValue(body.refresh_token)
 
       if (maybe_token.isOk()) {
