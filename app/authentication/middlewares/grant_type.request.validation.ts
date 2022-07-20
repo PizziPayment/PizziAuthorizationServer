@@ -1,41 +1,30 @@
 import { NextFunction, Request, Response } from 'express'
 import { ApiFailure, ApiResponseWrapper } from '../../common/models/api.response.model'
-import { GrantType, GrantTypes, PasswordGrantType, RefreshTokenGrantType } from '../models/grant_type'
+import { GrantTypeModel, GrantTypes, PasswordGrantTypeModel, RefreshTokenGrantTypeModel } from '../models/grant_type'
 
 export default async function validGrantType(
-  req: Request<unknown, unknown, GrantType>,
+  req: Request<unknown, unknown, GrantTypeModel>,
   res: Response<ApiResponseWrapper<unknown>>,
   next: NextFunction,
 ): Promise<void> {
-  const errors: Array<string> = []
+  let error = null
 
   switch (req.body.grant_type) {
     case GrantTypes.password: {
-      const body = req.body as PasswordGrantType
-
-      if (typeof body.username !== 'string') {
-        errors.push('invalid username field')
-      }
-      if (typeof body.password !== 'string') {
-        errors.push('invalid password field')
-      }
+      error = PasswordGrantTypeModel.validator.test(req.body as PasswordGrantTypeModel)
       break
     }
     case GrantTypes.refresh_token: {
-      const body = req.body as RefreshTokenGrantType
-
-      if (typeof body.refresh_token !== 'string') {
-        errors.push('invalid refresh_token field')
-      }
+      error = RefreshTokenGrantTypeModel.validator.test(req.body as RefreshTokenGrantTypeModel)
       break
     }
     default:
-      errors.push('invalid or unsupported `grant_type`')
+      error = 'invalid or unsupported `grant_type`'
   }
 
-  if (errors.length === 0) {
+  if (error === null) {
     next()
   } else {
-    res.status(400).send(new ApiFailure(req.url, errors.join(',')))
+    res.status(400).send(new ApiFailure(req.url, error))
   }
 }

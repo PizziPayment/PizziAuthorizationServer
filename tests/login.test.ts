@@ -1,7 +1,7 @@
 import { ClientModel, ClientsService, createExpirationDate, CredentialModel, rewriteTables, TokensService } from 'pizzi-db'
 import * as request from 'supertest'
 import { App } from '../app/api'
-import { GrantTypes, PasswordGrantType, RefreshTokenGrantType } from '../app/authentication/models/grant_type'
+import { GrantTypes, PasswordGrantTypeModel, RefreshTokenGrantTypeModel } from '../app/authentication/models/grant_type'
 import TokenResponseModel from '../app/authentication/models/token.response.model'
 import { client, client_header, user, shop } from './common/models'
 import { configIntoOrmConfig, createShop, createUser, verifyReceivedToken } from './common/services'
@@ -36,7 +36,7 @@ describe('Login endpoint', () => {
         it.each(credentials)('%s', async (_, createCredential, username, password) => {
           await createCredential()
 
-          const body: PasswordGrantType = { grant_type: GrantTypes.password, username: username, password: password }
+          const body: PasswordGrantTypeModel = { grant_type: GrantTypes.password, username: username, password: password }
           const res = await request(App).post(endpoint).set(client_header).send(body)
 
           expect(res.statusCode).toEqual(200)
@@ -46,7 +46,7 @@ describe('Login endpoint', () => {
         it('Should return 401 to a valid request with incorrect credentials', async () => {
           await createUser()
 
-          const body: PasswordGrantType = { grant_type: GrantTypes.password, username: user.email, password: user.password + 'no' }
+          const body: PasswordGrantTypeModel = { grant_type: GrantTypes.password, username: user.email, password: user.password + 'no' }
           const res = await request(App).post(endpoint).set(client_header).send(body)
 
           expect(res.statusCode).toEqual(401)
@@ -63,7 +63,7 @@ describe('Login endpoint', () => {
           let res_token = await TokensService.generateTokenBetweenClientAndCredential(client_handle.id, created_cred.id)
           expect(res_token.isOk()).toBeTruthy()
           const token = res_token._unsafeUnwrap()
-          const body: RefreshTokenGrantType = { grant_type: GrantTypes.refresh_token, refresh_token: token.refresh_token }
+          const body: RefreshTokenGrantTypeModel = { grant_type: GrantTypes.refresh_token, refresh_token: token.refresh_token }
           const res = await request(App).post(endpoint).set(client_header).send(body)
           expect(res.statusCode).toBe(200)
           verifyReceivedToken(res.body as TokenResponseModel)
@@ -76,7 +76,7 @@ describe('Login endpoint', () => {
         let res_token = await TokensService.generateTokenBetweenClientAndCredential(client_handle.id, created_cred.id, date, date)
         expect(res_token.isOk()).toBeTruthy()
         const token = res_token._unsafeUnwrap()
-        const body: RefreshTokenGrantType = { grant_type: GrantTypes.refresh_token, refresh_token: token.refresh_token }
+        const body: RefreshTokenGrantTypeModel = { grant_type: GrantTypes.refresh_token, refresh_token: token.refresh_token }
         const res = await request(App).post(endpoint).set(client_header).send(body)
         expect(res.statusCode).toBe(401)
       })
