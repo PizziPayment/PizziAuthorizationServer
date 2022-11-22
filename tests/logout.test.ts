@@ -1,8 +1,9 @@
-import { ClientModel, ClientsService, CredentialModel, rewriteTables, TokenModel, TokensService, TokensServiceError } from 'pizzi-db'
+import { ClientModel, ClientsService, CredentialModel, ErrorCause, rewriteTables, TokenModel, TokensService } from 'pizzi-db'
 import * as request from 'supertest'
 import { App } from '../app/api'
+import { config } from '../app/common/config'
 import { client } from './common/models'
-import { configIntoOrmConfig, createUser } from './common/services'
+import { createUser } from './common/services'
 
 async function createToken(credential: CredentialModel, client: ClientModel): Promise<TokenModel> {
   const res = await TokensService.generateTokenBetweenClientAndCredential(client.id, credential.id)
@@ -16,20 +17,29 @@ function createBearerHeader(token: string): Object {
 }
 
 // @ts-ignore
-let sequelizes = []
+let sequelize: Sequelize = undefined
+// @ts-ignore
 let client_handle: ClientModel = undefined
 
 beforeEach(async () => {
-  sequelizes.push(await rewriteTables(configIntoOrmConfig()))
+  const database = config.database
+  const orm_config = {
+    user: database.user,
+    password: database.password,
+    name: database.name,
+    host: database.host,
+    port: Number(database.port),
+    logging: false,
+  }
+  sequelize = await rewriteTables(orm_config)
 
   const res = await ClientsService.createClientFromIdAndSecret(client.id, client.secret)
   expect(res.isOk()).toBeTruthy()
   client_handle = res._unsafeUnwrap()
 })
 
-afterAll(() => {
-  // @ts-ignore
-  sequelizes.map((sequelize) => sequelize.close())
+afterEach(() => {
+  sequelize.close()
 })
 
 describe('Logout endpoint', () => {
@@ -44,7 +54,7 @@ describe('Logout endpoint', () => {
 
     const res = await TokensService.getTokenFromId(token.id)
     expect(res.isErr()).toBeTruthy()
-    expect(res._unsafeUnwrapErr()).toBe(TokensServiceError.TokenNotFound)
+    expect(res._unsafeUnwrapErr().code).toBe(ErrorCause.TokenNotFound)
   })
 
   it('Should return 401 to a valid request with incorrect credentials', async () => {
